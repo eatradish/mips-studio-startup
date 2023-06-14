@@ -77,27 +77,17 @@ ul {
   padding: 0;
 }
 
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
 .container {
   display: flex;
-  max-width: 800px;
-  max-height: 480px;
   flex-flow: column;
+  margin: 32px;
+  row-gap: 32px;
 }
-
-.header {
-  margin-bottom: 1em;
-}
-
 .title {
   font-size: 48px;
   color: #705697;
   margin: 0;
-  line-height: 70px;
+  line-height: 40px;
 }
 
 .subtitle {
@@ -143,21 +133,26 @@ li {
 .history {
   display: flex;
   flex-flow: column;
+  min-width: 310px;
 }
 
 .history>ul {
   margin: 0;
   display: flex;
   flex-flow: column;
+  margin-left: 20px;
 }
 
-.history>ul>li {
-  margin: 0;
+li {
+  padding-left: 12px;
+  list-style: "⯈";
+  font-size: 14px;
+  line-height: 20px;
 }
+
 
 .button-icon {
-  width: 22px;
-  height: 28px;
+  width: 28px;
   margin-left: 9px;
 }
 
@@ -171,4 +166,5 @@ li {
 .footer-text {
   float: right;
 }
+
 </style>

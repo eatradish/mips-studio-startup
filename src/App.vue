@@ -24,7 +24,8 @@ body {
   font-family: "Noto Sans CJK SC", Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
   text-rendering: optimizeLegibility;
-  max-width: 54rem;
+  /* max-width: 54rem; */
+  width: 100%;
 }
 
 #app {
@@ -33,7 +34,7 @@ body {
   /* text-align: center; */
   color: #2c3e50;
   /* max-width: 1280px; */
-  margin: 0 auto;
-
+  width: 800px;
+  min-height: 480px;
 }
 </style>
