@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import WelcomeView from "@/views/WelcomeView.vue";
+import NewProject from "@/views/NewProject.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -9,6 +10,11 @@ const router = createRouter({
         path: "/",
         component: WelcomeView
       },
+      {
+        name: "newproject",
+        path: "/newproject",
+        component: NewProject
+      }
     ]
 });
 

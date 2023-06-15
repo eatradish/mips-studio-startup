@@ -43,7 +43,7 @@ export default {
     }
   },
   methods: {},
-  components: {HeaderComponent}
+  components: { HeaderComponent }
 };
 
 

@@ -46,16 +46,8 @@ body {
   margin: 32px;
   row-gap: 32px;
 }
-
 </style>
 
 <script>
-export default {
-  data() {
-    return {
-      title: "",
-      subtitle: "",
-    }
-  }
-}
+export default {}
 </script>
