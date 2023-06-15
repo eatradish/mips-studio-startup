@@ -1,25 +1,16 @@
 <template>
-  <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-  <HelloWorld/>
+  <div class="container">
+    <RouterView></RouterView>
+    <div class="footer">
+      <a class="footer-text">© 2023 上海芯联芯智能科技有限公司</a>
+    </div>
+  </div>
 </template>
-
-<script>
-import HelloWorld from './components/HelloWorld.vue'
-
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
-</script>
 
 <style>
 body {
   background-color: #fff;
   display: flex;
-  /* min-height: 100vh; */
-  /* color: var(--color-text); */
   line-height: 1.3;
   font-family: "Noto Sans CJK SC", Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
@@ -37,4 +28,27 @@ body {
   width: 800px;
   min-height: 480px;
 }
+
+.footer {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 23px;
+  margin-top: 30px;
+}
+
+.footer-text {
+  float: right;
+}
+
+.container {
+  display: flex;
+  flex-flow: column;
+  margin: 32px;
+  row-gap: 32px;
+}
+
 </style>
+
+<script>
+export default {}
+</script>
