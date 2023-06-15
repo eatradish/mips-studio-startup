@@ -3,7 +3,7 @@
   <div class="main">
     <div class="startup">
       <a class="main-subtitle">启动向导</a>
-      <button class="button">
+      <button class="button" @click="$router.push({ name: 'newproject'})">
         <img class="button-icon" alt="Vue logo" src="@/assets/AddToCollection_16x.svg">
         <a>新建项目</a>
       </button>
