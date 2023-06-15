@@ -1,36 +1,35 @@
 <template>
- <div class="header">
-      <h1 class="title">MIPS Studio</h1>
-      <h2 class="subtitle">一站式 MIPS 集成开发环境</h2>
+  <HeaderComponent title="MIPS Studio" subtitle="一站式 MIPS 集成开发环境" />
+  <div class="main">
+    <div class="startup">
+      <a class="main-subtitle">启动向导</a>
+      <button class="button">
+        <img class="button-icon" alt="Vue logo" src="@/assets/AddToCollection_16x.svg">
+        <a>新建项目</a>
+      </button>
+      <button class="button">
+        <img class="button-icon" alt="Vue logo" src="@/assets/OpenFileFromProject_16x.svg">
+        <a>打开项目</a>
+      </button>
+      <button class="button">
+        <img class="button-icon" alt="Vue logo" src="@/assets/CloudSearch_16x.svg">
+        <a>查询用户文档</a>
+      </button>
     </div>
-    <div class="main">
-      <div class="startup">
-        <a class="main-subtitle">启动向导</a>
-        <button class="button">
-          <img class="button-icon" alt="Vue logo" src="@/assets/AddToCollection_16x.svg">
-          <a>新建项目</a>
-        </button>
-        <button class="button">
-          <img class="button-icon" alt="Vue logo" src="@/assets/OpenFileFromProject_16x.svg">
-          <a>打开项目</a>
-        </button>
-        <button class="button">
-          <img class="button-icon" alt="Vue logo" src="@/assets/CloudSearch_16x.svg">
-          <a>查询用户文档</a>
-        </button>
-      </div>
-      <div class="history">
-        <a class="main-subtitle">最近项目</a>
-        <ul>
-          <li v-for="todo in todos" :key="todo.id">
-            {{ todo.text }}
-          </li>
-        </ul>
-      </div>
+    <div class="history">
+      <a class="main-subtitle">最近项目</a>
+      <ul>
+        <li v-for="todo in todos" :key="todo.id">
+          {{ todo.text }}
+        </li>
+      </ul>
     </div>
+  </div>
 </template>
 
 <script>
+import HeaderComponent from '@/components/HeaderComponent.vue';
+
 let id = 0;
 export default {
   data() {
@@ -40,34 +39,18 @@ export default {
         { id: id++, text: 'Learn HTML' },
         { id: id++, text: 'Learn JavaScript' },
         { id: id++, text: 'Learn Vue' }
-      ]
+      ],
     }
   },
-  methods: {
-    addTodo() {
-      // ...
-      this.newTodo = ''
-    },
-    // removeTodo(todo) {
-    //   // ...
-    // }
-  }
-}
+  methods: {},
+  components: {HeaderComponent}
+};
 
 
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
 .title {
   font-size: 48px;
   color: #705697;
@@ -126,6 +109,7 @@ ul {
   display: flex;
   flex-flow: column;
   margin-left: 20px;
+  padding: 0;
 }
 
 li {
@@ -140,5 +124,4 @@ li {
   width: 28px;
   margin-left: 9px;
 }
-
 </style>
