@@ -1,6 +1,7 @@
 <template>
   <button class="button" :class="{ button_active: selected == index }" @click="select(index)" >
     <a>{{ title }}</a>
+    <a v-if="selected == index">{{ subtitle }}</a>
   </button>
 </template>
 
@@ -13,6 +14,8 @@
   background: #EDE8EF;
   border: none;
   text-align: justify;
+  display: flex;
+  flex-flow: column;
 }
 
 .button_active {
@@ -24,11 +27,11 @@
 
 <script>
 export default {
-  isactive: false,
   props: {
     title: String,
     selected: Number,
     index: Number,
+    subtitle: String,
   },
   methods: {
     select: function (index) {

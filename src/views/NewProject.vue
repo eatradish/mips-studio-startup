@@ -5,7 +5,7 @@
       <a class="main-subtitle">设备类型</a>
         <ul>
           <li v-for="d in deviceList" :key="d.index">
-            <ListButton v-model:title="d.name" v-model:selected="selection" v-model:index="d.index" />
+            <ListButton v-model:title="d.name" v-model:selected="selection" v-model:index="d.index" v-model:subtitle="d.desc" />
           </li>
         </ul>
     </div>
@@ -41,5 +41,13 @@ export default {
   .main-subtitle {
     display: flex;
     flex-flow: column;
+  }
+
+  ul {
+    padding: 0;
+  }
+
+  li {
+    list-style: none;
   }
 </style>
