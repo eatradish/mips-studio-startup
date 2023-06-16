@@ -1,8 +1,7 @@
 <template>
   <div class="header">
-
-    <h1 v-if="cn" class="title">{{ title }}</h1>
-    <h1 v-else class="title-cn">{{ title }}</h1>
+    <h1 v-if="cn" class="title-cn">{{ title }}</h1>
+    <h1 v-else class="title">{{ title }}</h1>
     <h2 class="subtitle">{{ subtitle }}</h2>
   </div>
 </template>
