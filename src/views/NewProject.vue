@@ -3,11 +3,14 @@
   <div class="main">
     <div class="device">
       <a class="main-subtitle">设备类型</a>
-        <ul>
-          <li v-for="d in deviceList" :key="d.index">
-            <ListButton v-model:title="d.name" v-model:selected="selection" v-model:index="d.index" v-model:subtitle="d.desc" />
-          </li>
-        </ul>
+      <ul>
+        <li v-for="d in deviceList" :key="d.index">
+          <ListButton v-model:title="d.name" v-model:selected="selection" v-model:index="d.index" v-model:subtitle="d.desc" />
+        </li>
+      </ul>
+    </div>
+    <div class="config">
+      <a class="main-subtitle">配置概要</a>
     </div>
   </div>
 </template>
