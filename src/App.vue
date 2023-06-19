@@ -1,9 +1,6 @@
 <template>
   <div class="container">
     <RouterView></RouterView>
-    <div class="footer">
-      <a class="footer-text">© 2023 上海芯联芯智能科技有限公司</a>
-    </div>
   </div>
 </template>
 

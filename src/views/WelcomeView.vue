@@ -25,6 +25,9 @@
       </ul>
     </div>
   </div>
+  <div class="footer">
+      <a class="footer-text">© 2023 上海芯联芯智能科技有限公司</a>
+  </div>
 </template>
 
 <script>
@@ -84,7 +87,7 @@ export default {
 }
 
 .startup .button {
-  /* position: absolute; */
+  /* position: absolute; */ 
   width: 276px;
   height: 48px;
   background: #EDE8EF;
