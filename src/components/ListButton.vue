@@ -5,7 +5,7 @@
   </button>
 </template>
 
-<style>
+<style scoped>
 .button {
   font-size: 24px;
   line-height: 35px;
