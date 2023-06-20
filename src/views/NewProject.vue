@@ -22,6 +22,18 @@
           <a class="desctitle">工具链类型</a>
           <a class="desctitle">项目模板</a>
         </div>
+        <a class="adjust-arg">调整参数</a>
+    </div>
+  </div>
+  <div class="project-path">
+    <a class="main-subtitle">项目路径</a>
+    <div class="bar">
+      <div class="bar-folder">
+        <input type="text" id="directory" class="directory">
+        <img class="open-folder" src="@/assets/Folder_32x.svg">
+      </div>
+      <button class="bar-button-continue">创建项目</button>
+      <button class="bar-button-cancel">取消</button>
     </div>
   </div>
 </template>
@@ -37,7 +49,8 @@ export default {
       selection: 0,
       deviceList: [
         { name: "MIPS Creator CI20", desc: "123"},
-        { name: "aaa", desc: "456" }
+        { name: "aaa", desc: "456" },
+        { name: "自定义", desc: "自定义" }
       ]
     }
   }
@@ -65,6 +78,7 @@ export default {
     display: flex;
     flex-flow: column;
     row-gap: 10px;
+    min-width: 310px;
   }
   .config .desc {
     display: flex;
@@ -91,5 +105,46 @@ export default {
 
   li {
     list-style: none;
+  }
+
+  .adjust-arg {
+    color: #705697;
+  }
+
+  .directory {
+    width: 514px;
+    height: 36px;
+    background-color: #D6CFE2;
+    border: none;
+  }
+
+  .bar {
+    display: flex;
+    flex-flow: row;
+    column-gap: 12px;
+  }
+
+  .bar-folder {
+    display: flex;
+    flex-flow: row;
+  }
+
+  .bar-button-continue {
+    width: 96px; 
+    height: 36px;
+    background: #D1B6DB;
+    border: none;
+  }
+
+  .bar-button-cancel {
+    width: 96px; 
+    height: 36px;
+    background: #D6CFE2;
+    border: none;
+  }
+
+  .open-folder {
+    width: 21px;
+    height: 21px;
   }
 </style>

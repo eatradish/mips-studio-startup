@@ -1,7 +1,7 @@
 <template>
   <button class="button" :class="{ button_active: selected == index }" @click="select(index)" >
-    <a>{{ title }}</a>
-    <a v-if="selected == index">{{ subtitle }}</a>
+    <a class="button-title">{{ title }}</a>
+    <a class="button-subtitle" v-if="selected == index">{{ subtitle }}</a>
   </button>
 </template>
 
@@ -16,6 +16,16 @@
   text-align: justify;
   display: flex;
   flex-flow: column;
+}
+
+.button .button-title {
+  padding-left: 13px;
+  padding-top: 12px;
+}
+
+.button-subtitle {
+  padding-left: 13px;
+  padding-bottom: 12px;
 }
 
 .button_active {
