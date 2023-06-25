@@ -14,3 +14,13 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .select {
+    width: 340px;
+    height: 36px;
+    background: #D6CFE2;
+    border: none;
+    font-size: 16px;
+  }
+</style>
