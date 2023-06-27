@@ -5,7 +5,7 @@
       <a class="main-subtitle">设备类型</a>
       <ul>
         <li v-for="d in deviceList.entries()" :key="d[0]">
-          <ListButton v-model:title="d[1].name" v-model:selected="selection" v-model:subtitle="d[1].desc" v-model:index="d[0]" />
+          <ListButton v-model:title="d[1].product_name" v-model:selected="selection" v-model:subtitle="d[1].product_chip" v-model:index="d[0]" />
         </li>
       </ul>
     </div>
@@ -14,13 +14,28 @@
         <div class="desc">
           <div class="desc-container">
             <a class="desctitle">处理器核心</a>
-            <a>{{ deviceList[selection].name }}</a>
+            <a>{{ deviceList[selection].product_info.core_desc }}</a>
           </div>
-          <a class="desctitle">指令集架构</a>
-          <a class="desctitle">指令集位宽</a>
-          <a class="desctitle">内存容量</a>
-          <a class="desctitle">工具链类型</a>
-          <a class="desctitle">项目模板</a>
+          <div class="desc-container">
+            <a class="desctitle">指令集架构</a>
+            <a>{{ deviceList[selection].product_info.isa_desc }}</a>
+          </div>
+          <div class="desc-container">
+            <a class="desctitle">指令集位宽</a>
+            <a>{{ deviceList[selection].product_info.bits }}</a>
+          </div>
+          <div class="desc-container">
+            <a class="desctitle">内存容量</a>
+            <a>{{ deviceList[selection].product_info.ram }}</a>
+          </div>
+          <div class="desc-container">
+            <a class="desctitle">工具链类型</a>
+            <a>{{ deviceList[selection].toolchain.type_desc }}</a>
+          </div>
+          <div class="desc-container">
+            <a class="desctitle">项目模板</a>
+            <a>{{ deviceList[selection].template.type_desc }}</a>
+          </div>
         </div>
         <a class="adjust-arg">调整参数</a>
     </div>
@@ -41,17 +56,26 @@
 <script>
 import HeaderComponent from '@/components/HeaderComponent.vue';
 import ListButton from '@/components/ListButton.vue';
+import * as fs from 'fs';
+import * as path from 'path';
+
+// const fs = require('fs');
+// const path = require('path');
+
+function read_json() {
+  const p = path.join(".", "mips-studio-startup-json.json");
+  const s = fs.readFileSync(p, { encoding: 'utf8', flag: 'r' });
+  let json = JSON.parse(s);
+  return json;
+}
+
 
 export default {
   components: { HeaderComponent, ListButton },
   data() {
     return {
       selection: 0,
-      deviceList: [
-        { name: "MIPS Creator CI20", desc: "123"},
-        { name: "aaa", desc: "456" },
-        { name: "自定义", desc: "自定义" }
-      ]
+      deviceList: [read_json()]
     }
   }
 }
@@ -63,6 +87,7 @@ export default {
     flex-flow: column;
     row-gap: 10px;
   }
+
   .main-subtitle {
     display: flex;
     flex-flow: column;
