@@ -111,4 +111,11 @@ export default {
     border: none;
   }
 
+  button:hover {
+    background: #E0C5EA;
+  }
+
+  select:hover {
+    background: #E0C5EA;
+  }
 </style>

@@ -33,6 +33,10 @@
   height: 80px;
   background: #D1B6DB;
 }
+
+.button:hover {
+  background: #E0C5EA;
+}
 </style>
 
 <script>

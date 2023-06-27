@@ -147,4 +147,9 @@ export default {
     width: 21px;
     height: 21px;
   }
+
+  button:hover {
+    background: #E0C5EA;
+  }
+
 </style>

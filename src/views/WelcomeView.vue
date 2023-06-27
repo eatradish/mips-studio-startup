@@ -101,6 +101,10 @@ export default {
   column-gap: 15px;
 }
 
+.button:hover {
+  background: #E0C5EA;
+}
+
 .history {
   display: flex;
   flex-flow: column;
