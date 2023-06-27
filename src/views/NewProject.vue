@@ -59,9 +59,6 @@ import ListButton from '@/components/ListButton.vue';
 import * as fs from 'fs';
 import * as path from 'path';
 
-// const fs = require('fs');
-// const path = require('path');
-
 function read_json() {
   const p = path.join(".", "mips-studio-startup-json.json");
   const s = fs.readFileSync(p, { encoding: 'utf8', flag: 'r' });
