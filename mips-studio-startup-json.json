@@ -129,13 +129,24 @@
         }
     },
     "template": {
-        "type": "pic32mz",
-        "type_desc": "PIC32MZ",
-        "interface": "cmsis",
-        "interface_desc": "CMSIS",
-        "debugger": "openocd",
-        "debugger_desc": "OpenOCD",
-        "builder": "eide_unify", 
-        "builder_desc": "unify_builder (EIDE)"
+        "template_type": {
+            "types": {
+                "pic32mz_cmsis": "PIC32MZ"
+            },
+            "default": "pic32mz"
+        },
+        "debugger": {
+            "types": {
+                "openocd": "OpenOCD"
+            },
+            "default": "openocd"
+        },
+        "builder": {
+            "types": {
+                "eide_unify": "unify_builder (EIDE)",
+                "gnu_make": "GNU Make"
+            },
+            "default": "eide_unify"
+        }
     }
 }
