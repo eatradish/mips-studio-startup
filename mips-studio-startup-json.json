@@ -129,24 +129,8 @@
         }
     },
     "template": {
-        "template_type": {
-            "types": {
-                "pic32mz_cmsis": "PIC32MZ"
-            },
-            "default": "pic32mz"
-        },
-        "debugger": {
-            "types": {
-                "openocd": "OpenOCD"
-            },
-            "default": "openocd"
-        },
-        "builder": {
-            "types": {
-                "eide_unify": "unify_builder (EIDE)",
-                "gnu_make": "GNU Make"
-            },
-            "default": "eide_unify"
-        }
+        "template_type": ["PIC32MZ"],
+        "debugger": ["OpenOCD"],
+        "builder":  ["unify_builder (EIDE)", "GNU Make"]
     }
 }
