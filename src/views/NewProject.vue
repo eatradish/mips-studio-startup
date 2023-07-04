@@ -60,6 +60,7 @@ import ListButton from '@/components/ListButton.vue';
 import * as fs from 'fs';
 import * as path from 'path';
 import Seven from 'node-7z'
+import * as child_process from 'child_process';
 // import sevenBin from '7zip-bin'
 
 function read_json() {
@@ -75,6 +76,7 @@ function extract_template(name, extractTo) {
   const seven = Seven.extractFull(p, extractTo)
   seven.on('error', (err) => console.error(err));
   seven.on('end', () => console.log("done!"));
+  child_process.exec(`vscode ${extractTo}/*.code-workspace`, (out) => console.log(out));
 }
 
 export default {
