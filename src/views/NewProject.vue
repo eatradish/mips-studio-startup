@@ -34,7 +34,7 @@
           </div>
           <div class="desc-container">
             <a class="desctitle">项目模板</a>
-            <a>{{ deviceList[selection].template.type_desc }}</a>
+            <a>{{ deviceList[selection].template.template_type[0] }}</a>
           </div>
         </div>
         <a class="adjust-arg">调整参数</a>
@@ -48,7 +48,7 @@
         <img class="open-folder" src="@/assets/Folder_32x.svg">
       </div>
       <button class="bar-button-continue">创建项目</button>
-      <button class="bar-button-cancel">取消</button>
+      <button class="bar-button-cancel" @click="$router.back()">取消</button>
     </div>
   </div>
 </template>
