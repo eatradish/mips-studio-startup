@@ -5,39 +5,40 @@
       <a class="main-subtitle">设备类型</a>
       <ul>
         <li v-for="d in deviceList.entries()" :key="d[0]">
-          <ListButton v-model:title="d[1].product_name" v-model:selected="selection" v-model:subtitle="d[1].product_chip" v-model:index="d[0]" />
+          <ListButton v-model:title="d[1].product_name" v-model:selected="selection" v-model:subtitle="d[1].product_chip"
+            v-model:index="d[0]" />
         </li>
       </ul>
     </div>
     <div class="config">
       <a class="main-subtitle">配置概要</a>
-        <div class="desc">
-          <div class="desc-container">
-            <a class="desctitle">处理器核心</a>
-            <a>{{ deviceList[selection].product_info.core_desc }}</a>
-          </div>
-          <div class="desc-container">
-            <a class="desctitle">指令集架构</a>
-            <a>{{ deviceList[selection].product_info.isa_desc }}</a>
-          </div>
-          <div class="desc-container">
-            <a class="desctitle">指令集位宽</a>
-            <a>{{ deviceList[selection].product_info.bits }}</a>
-          </div>
-          <div class="desc-container">
-            <a class="desctitle">内存容量</a>
-            <a>{{ deviceList[selection].product_info.ram }}</a>
-          </div>
-          <div class="desc-container">
-            <a class="desctitle">工具链类型</a>
-            <a>{{ deviceList[selection].toolchain.type_desc }}</a>
-          </div>
-          <div class="desc-container">
-            <a class="desctitle">项目模板</a>
-            <a>{{ deviceList[selection].template.template_type[0] }}</a>
-          </div>
+      <div class="desc">
+        <div class="desc-container">
+          <a class="desctitle">处理器核心</a>
+          <a>{{ deviceList[selection].product_info.core_desc }}</a>
         </div>
-        <a class="adjust-arg">调整参数</a>
+        <div class="desc-container">
+          <a class="desctitle">指令集架构</a>
+          <a>{{ deviceList[selection].product_info.isa_desc }}</a>
+        </div>
+        <div class="desc-container">
+          <a class="desctitle">指令集位宽</a>
+          <a>{{ deviceList[selection].product_info.bits }}</a>
+        </div>
+        <div class="desc-container">
+          <a class="desctitle">内存容量</a>
+          <a>{{ deviceList[selection].product_info.ram }}</a>
+        </div>
+        <div class="desc-container">
+          <a class="desctitle">工具链类型</a>
+          <a>{{ deviceList[selection].toolchain.type_desc }}</a>
+        </div>
+        <div class="desc-container">
+          <a class="desctitle">项目模板</a>
+          <a>{{ deviceList[selection].template.template_type[0] }}</a>
+        </div>
+      </div>
+      <a class="adjust-arg">调整参数</a>
     </div>
   </div>
   <div class="project-path">
@@ -47,7 +48,7 @@
         <input type="text" id="directory" class="directory">
         <img class="open-folder" src="@/assets/Folder_32x.svg">
       </div>
-      <button class="bar-button-continue">创建项目</button>
+      <button class="bar-button-continue" @click="extract_template(deviceList[selection].product_chip, `/home/saki/aaaaaaaa`)">创建项目</button>
       <button class="bar-button-cancel" @click="$router.back()">取消</button>
     </div>
   </div>
@@ -58,6 +59,8 @@ import HeaderComponent from '@/components/HeaderComponent.vue';
 import ListButton from '@/components/ListButton.vue';
 import * as fs from 'fs';
 import * as path from 'path';
+import Seven from 'node-7z'
+// import sevenBin from '7zip-bin'
 
 function read_json() {
   const p = path.join(".", "mips-studio-startup-json.json");
@@ -66,112 +69,120 @@ function read_json() {
   return json;
 }
 
+function extract_template(name, extractTo) {
+  const p = path.join(".", "eide-templates", `${name}.ept`);
+  // const pathTo7zip = sevenBin.path7za
+  const seven = Seven.extractFull(p, extractTo)
+  seven.on('error', (err) => console.error(err));
+  seven.on('end', () => console.log("done!"));
+}
 
 export default {
   components: { HeaderComponent, ListButton },
   data() {
     return {
       selection: 0,
-      deviceList: [read_json()]
+      deviceList: [read_json()],
+      extract_template: extract_template,
     }
   }
 }
 </script>
 
 <style scoped>
-  .device {
-    display: flex;
-    flex-flow: column;
-    row-gap: 10px;
-  }
+.device {
+  display: flex;
+  flex-flow: column;
+  row-gap: 10px;
+}
 
-  .main-subtitle {
-    display: flex;
-    flex-flow: column;
-  }
+.main-subtitle {
+  display: flex;
+  flex-flow: column;
+}
 
-  .main {
-    display: flex;
-    column-gap: 105px;
-    column-count: 2;
-  }
+.main {
+  display: flex;
+  column-gap: 105px;
+  column-count: 2;
+}
 
-  .config {
-    display: flex;
-    flex-flow: column;
-    row-gap: 10px;
-    min-width: 310px;
-  }
-  .config .desc {
-    display: flex;
-    flex-flow: column;
-    row-gap: 10px;
-  }
+.config {
+  display: flex;
+  flex-flow: column;
+  row-gap: 10px;
+  min-width: 310px;
+}
 
-  .desc .desctitle {
-    font-weight: bold;
-  }
+.config .desc {
+  display: flex;
+  flex-flow: column;
+  row-gap: 10px;
+}
 
-  .desc-container {
-    display: flex;
-    column-gap: 15px;
-  }
+.desc .desctitle {
+  font-weight: bold;
+}
 
-  ul {
-    padding: 0;
-    display: flex;
-    flex-flow: column;
-    row-gap: 10px;
-    margin: 0;
-  }
+.desc-container {
+  display: flex;
+  column-gap: 15px;
+}
 
-  li {
-    list-style: none;
-  }
+ul {
+  padding: 0;
+  display: flex;
+  flex-flow: column;
+  row-gap: 10px;
+  margin: 0;
+}
 
-  .adjust-arg {
-    color: #705697;
-  }
+li {
+  list-style: none;
+}
 
-  .directory {
-    width: 514px;
-    height: 36px;
-    background-color: #D6CFE2;
-    border: none;
-  }
+.adjust-arg {
+  color: #705697;
+}
 
-  .bar {
-    display: flex;
-    flex-flow: row;
-    column-gap: 12px;
-  }
+.directory {
+  width: 514px;
+  height: 36px;
+  background-color: #D6CFE2;
+  border: none;
+}
 
-  .bar-folder {
-    display: flex;
-    flex-flow: row;
-  }
+.bar {
+  display: flex;
+  flex-flow: row;
+  column-gap: 12px;
+}
 
-  .bar-button-continue {
-    width: 96px; 
-    height: 36px;
-    background: #D1B6DB;
-    border: none;
-  }
+.bar-folder {
+  display: flex;
+  flex-flow: row;
+}
 
-  .bar-button-cancel {
-    width: 96px; 
-    height: 36px;
-    background: #D6CFE2;
-    border: none;
-  }
+.bar-button-continue {
+  width: 96px;
+  height: 36px;
+  background: #D1B6DB;
+  border: none;
+}
 
-  .open-folder {
-    width: 21px;
-    height: 21px;
-  }
+.bar-button-cancel {
+  width: 96px;
+  height: 36px;
+  background: #D6CFE2;
+  border: none;
+}
 
-  button:hover {
-    background: #E0C5EA;
-  }
+.open-folder {
+  width: 21px;
+  height: 21px;
+}
 
+button:hover {
+  background: #E0C5EA;
+}
 </style>
