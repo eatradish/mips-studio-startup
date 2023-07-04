@@ -1,0 +1,4 @@
+[submodule "eide-templates"]
+	path = eide-templates
+	url = https://github.com/mips-studio/eide-templates
+	branch = mips-studio
