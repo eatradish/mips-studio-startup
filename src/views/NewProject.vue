@@ -46,9 +46,9 @@
     <div class="bar">
       <div class="bar-folder">
         <input type="text" id="directory" class="directory">
-        <img class="open-folder" src="@/assets/Folder_32x.svg">
+        <img class="open-folder" src="@/assets/Folder_32x.svg" @click="new_folder_dialog()">
       </div>
-      <button class="bar-button-continue" @click="extract_template(deviceList[selection].product_chip, `/home/saki/aaaaaaaa`)">创建项目</button>
+      <button class="bar-button-continue" @click="extract_template(deviceList[selection].product_chip, )">创建项目</button>
       <button class="bar-button-cancel" @click="$router.back()">取消</button>
     </div>
   </div>
@@ -59,9 +59,9 @@ import HeaderComponent from '@/components/HeaderComponent.vue';
 import ListButton from '@/components/ListButton.vue';
 import * as fs from 'fs';
 import * as path from 'path';
-import Seven from 'node-7z'
+import Seven from 'node-7z';
 import * as child_process from 'child_process';
-// import sevenBin from '7zip-bin'
+const { dialog } = require('electron').remote;
 
 function read_json() {
   const p = path.join(".", "mips-studio-startup-json.json");
@@ -72,11 +72,15 @@ function read_json() {
 
 function extract_template(name, extractTo) {
   const p = path.join(".", "eide-templates", `${name}.ept`);
-  // const pathTo7zip = sevenBin.path7za
   const seven = Seven.extractFull(p, extractTo)
   seven.on('error', (err) => console.error(err));
   seven.on('end', () => console.log("done!"));
   child_process.exec(`vscode ${extractTo}/*.code-workspace`, (out) => console.log(out));
+}
+
+function new_folder_dialog() {
+  const dir = dialog.showOpenDialogSync({ properties: ['openDirectory'] });
+  return dir[0];
 }
 
 export default {
@@ -86,6 +90,8 @@ export default {
       selection: 0,
       deviceList: [read_json()],
       extract_template: extract_template,
+      new_folder_dialog: new_folder_dialog,
+      dir: '',
     }
   }
 }
