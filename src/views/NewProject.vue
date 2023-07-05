@@ -35,20 +35,20 @@
         </div>
         <div class="desc-container">
           <a class="desctitle">项目模板</a>
-          <a>{{ deviceList[selection].template.template_type[0] }}</a>
+          <a>{{ deviceList[selection].template.template_type[0].name }}</a>
         </div>
       </div>
       <a class="adjust-arg">调整参数</a>
     </div>
   </div>
   <div class="project-path">
-    <a class="main-subtitle">项目路径</a>
+    <a class="main-subtitle">项目名称</a>
     <div class="bar">
       <div class="bar-folder">
-        <input type="text" id="directory" class="directory">
-        <img class="open-folder" src="@/assets/Folder_32x.svg" @click="new_folder_dialog()">
+        <input type="text" id="directory" class="directory" v-model="projectName">
       </div>
-      <button class="bar-button-continue" @click="extract_template(deviceList[selection].product_chip, )">创建项目</button>
+      <button class="bar-button-continue"
+        @click="extract_template(deviceList[selection].product_chip, projectName, deviceList[selection].template.template_type[0].codespace_filename)">创建项目</button>
       <button class="bar-button-cancel" @click="$router.back()">取消</button>
     </div>
   </div>
@@ -70,12 +70,13 @@ function read_json() {
   return json;
 }
 
-function extract_template(name, extractTo) {
+function extract_template(name, projectName, workspaceName) {
+  const extractTo = `${new_folder_dialog()}/${projectName}`;
   const p = path.join(".", "eide-templates", `${name}.ept`);
   const seven = Seven.extractFull(p, extractTo)
   seven.on('error', (err) => console.error(err));
   seven.on('end', () => console.log("done!"));
-  child_process.exec(`vscode ${extractTo}/*.code-workspace`, (out) => console.log(out));
+  child_process.exec(`vscode ${extractTo}/${workspaceName}`, (out) => console.log(out));
 }
 
 function new_folder_dialog() {
@@ -91,7 +92,7 @@ export default {
       deviceList: [read_json()],
       extract_template: extract_template,
       new_folder_dialog: new_folder_dialog,
-      dir: '',
+      projectName: '',
     }
   }
 }

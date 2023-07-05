@@ -129,7 +129,7 @@
         }
     },
     "template": {
-        "template_type": ["PIC32MZ"],
+        "template_type": [{"name": "PIC32MZ", "codespace_filename": "pic32mz.code-workspace"}],
         "debugger": ["OpenOCD"],
         "builder":  ["unify_builder (EIDE)", "GNU Make"]
     }
