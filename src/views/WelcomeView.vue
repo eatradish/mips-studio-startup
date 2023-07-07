@@ -7,7 +7,7 @@
         <img class="button-icon" alt="Vue logo" src="@/assets/AddToCollection_16x.svg">
         <a>新建项目</a>
       </button>
-      <button class="button">
+      <button class="button" @click="$router.push({ name: 'importproject' })">
         <img class="button-icon" alt="Vue logo" src="@/assets/OpenFileFromProject_16x.svg">
         <a>打开项目</a>
       </button>
