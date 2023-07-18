@@ -32,8 +32,10 @@
 
 <script>
 import HeaderComponent from '@/components/HeaderComponent.vue';
-const { dialog, shell } = require('electron').remote;
+const { dialog, shell, app } = require('electron').remote;
 import * as child_process from 'child_process';
+import * as fs from 'fs';
+import path from 'path';
 
 let id = 0;
 export default {
@@ -55,7 +57,12 @@ export default {
     },
     openProject() {
       const dir = dialog.showOpenDialogSync({ properties: ['openDirectory'] });
-      child_process.exec(`vscode ${dir[0]}`)
+      if (fs.existsSync(path.join(dir[0], '.eide'))) {
+        child_process.exec(`vscode ${dir[0]}`);
+        app.quit();
+      } else {
+        this.$router.push({ name: 'importproject' });
+      }
     }
   },
   components: { HeaderComponent },
