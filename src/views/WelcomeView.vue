@@ -11,7 +11,7 @@
         <img class="button-icon" alt="Vue logo" src="@/assets/OpenFileFromProject_16x.svg">
         <a>打开项目</a>
       </button>
-      <button class="button">
+      <button class="button" @click="doc()">
         <img class="button-icon" alt="Vue logo" src="@/assets/CloudSearch_16x.svg">
         <a>查询用户文档</a>
       </button>
@@ -26,12 +26,13 @@
     </div>
   </div>
   <div class="footer">
-      <a class="footer-text">© 2023 上海芯联芯智能科技有限公司</a>
+    <a class="footer-text">© 2023 上海芯联芯智能科技有限公司</a>
   </div>
 </template>
 
 <script>
 import HeaderComponent from '@/components/HeaderComponent.vue';
+const shell = require('electron').remote.shell;
 
 let id = 0;
 export default {
@@ -45,10 +46,15 @@ export default {
       ],
     }
   },
-  methods: {},
-  components: { HeaderComponent }
+  methods: {
+    doc() {
+      shell.openExternal('https://www.cipunited.com')
+        .then(() => console.log('opened!'))
+        .catch((reson) => console.error(reson));
+    }
+  },
+  components: { HeaderComponent },
 };
-
 
 </script>
 
@@ -87,7 +93,7 @@ export default {
 }
 
 .startup .button {
-  /* position: absolute; */ 
+  /* position: absolute; */
   width: 276px;
   height: 48px;
   background: #EDE8EF;
