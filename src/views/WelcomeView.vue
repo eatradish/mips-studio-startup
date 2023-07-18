@@ -7,7 +7,7 @@
         <img class="button-icon" alt="Vue logo" src="@/assets/AddToCollection_16x.svg">
         <a>新建项目</a>
       </button>
-      <button class="button" @click="$router.push({ name: 'importproject' })">
+      <button class="button" @click="openProject()">
         <img class="button-icon" alt="Vue logo" src="@/assets/OpenFileFromProject_16x.svg">
         <a>打开项目</a>
       </button>
@@ -32,7 +32,8 @@
 
 <script>
 import HeaderComponent from '@/components/HeaderComponent.vue';
-const shell = require('electron').remote.shell;
+const { dialog, shell } = require('electron').remote;
+import * as child_process from 'child_process';
 
 let id = 0;
 export default {
@@ -51,6 +52,10 @@ export default {
       shell.openExternal('https://www.cipunited.com')
         .then(() => console.log('opened!'))
         .catch((reson) => console.error(reson));
+    },
+    openProject() {
+      const dir = dialog.showOpenDialogSync({ properties: ['openDirectory'] });
+      child_process.exec(`vscode ${dir[0]}`)
     }
   },
   components: { HeaderComponent },
