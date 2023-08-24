@@ -57,13 +57,13 @@ export default {
     },
     openProject() {
       const dir = dialog.showOpenDialogSync({ properties: ['openDirectory'] });
-      if (fs.existsSync(path.join(dir[0], '.eide'))) {
-        if (dir.length > 0) {
+      if (dir && dir.length > 0) {
+        if (fs.existsSync(path.join(dir[0], '.eide'))) {
           child_process.exec(`vscode ${dir[0]}`);
           app.quit();
+        } else {
+          this.$router.push({ name: 'importproject' });
         }
-      } else {
-        this.$router.push({ name: 'importproject' });
       }
     }
   },

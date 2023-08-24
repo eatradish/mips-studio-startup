@@ -70,18 +70,13 @@ function read_json() {
   return json;
 }
 
-function extract_template(name, projectName, workspaceName) {
-  const extractTo = `${new_folder_dialog()}/${projectName}`;
-  const p = path.join(".", "eide-templates", `${name}.ept`);
-  const seven = Seven.extractFull(p, extractTo)
-  seven.on('error', (err) => console.error(err));
-  seven.on('end', () => console.log("done!"));
-  child_process.exec(`vscode ${extractTo}/${workspaceName}`, (out) => console.log(out));
-}
-
 function new_folder_dialog() {
   const dir = dialog.showOpenDialogSync({ properties: ['openDirectory'] });
-  return dir[0];
+  if (dir && dir.length > 0) {
+    return dir[0];
+  } else {
+    return;
+  }
 }
 
 export default {
@@ -90,9 +85,21 @@ export default {
     return {
       selection: 0,
       deviceList: [read_json()],
-      extract_template: extract_template,
       new_folder_dialog: new_folder_dialog,
       projectName: '',
+    }
+  },
+  methods: {
+    extract_template(name, projectName, workspaceName) {
+      const folder = new_folder_dialog();
+      if (folder) {
+        const extractTo = `${folder}/${projectName}`;
+        const p = path.join(".", "eide-templates", `${name}.ept`);
+        const seven = Seven.extractFull(p, extractTo)
+        seven.on('error', (err) => console.error(err));
+        seven.on('end', () => console.log("done!"));
+        child_process.exec(`vscode ${extractTo}/${workspaceName}`, (out) => console.log(out));
+      }
     }
   }
 }
