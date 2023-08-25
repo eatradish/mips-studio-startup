@@ -19,8 +19,8 @@
     <div class="history">
       <a class="main-subtitle">最近项目</a>
       <ul>
-        <li v-for="todo in todos" :key="todo.id">
-          {{ todo.text }}
+        <li v-for="[i, entry] in history.entries()" :key="i">
+          <a class="link" @click="opendir(entry)">{{ entry }}</a>
         </li>
       </ul>
     </div>
@@ -38,16 +38,17 @@ import * as fs from 'fs';
 import path from 'path';
 import * as os from 'os';
 
-let id = 0;
+function history() {
+  const f = fs.readFileSync(`${os.homedir}/.mips-studio/history`, 'utf8');
+  const res = f.split('\n')
+  
+  return res;
+}
+
 export default {
   data() {
     return {
-      newTodo: '',
-      todos: [
-        { id: id++, text: 'Learn HTML' },
-        { id: id++, text: 'Learn JavaScript' },
-        { id: id++, text: 'Learn Vue' }
-      ],
+      history: history()
     }
   },
   methods: {
@@ -55,6 +56,13 @@ export default {
       shell.openExternal('https://www.cipunited.com')
         .then(() => console.log('opened!'))
         .catch((reson) => console.error(reson));
+    },
+    opendir(dir) {
+      if (!fs.existsSync(dir)) {
+        console.error(`${dir} does not exist`);
+        return;
+      }
+      child_process.exec(`vscode ${dir}`)
     },
     openProject() {
       const dir = dialog.showOpenDialogSync({ properties: ['openDirectory'] });
@@ -68,14 +76,16 @@ export default {
             fs.appendFileSync(`${os.homedir}/.mips-studio/history`, `${dir[0]}\n`);
           } else {
             const f = fs.readFileSync(`${os.homedir}/.mips-studio/history`, 'utf8');
-            let f_inner = [];
+            let fInner = [];
 
             for (let line of f.split('\n')) {
               line = line.trim();
-              f_inner.push(line);
+              if (line !== '') {
+                fInner.push(line);
+              }
             }
 
-            if (!f_inner.find(dir)) {
+            if (!fInner.find((s) => s == dir[0])) {
               fs.appendFileSync(`${os.homedir}/.mips-studio/history`, `${dir[0]}\n`);
             }
           }
@@ -93,6 +103,16 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+.link {
+  color: #705697;
+  cursor: pointer;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
 .title {
   font-size: 48px;
   color: #705697;
