@@ -36,6 +36,7 @@ const { dialog, shell, app } = require('electron').remote;
 import * as child_process from 'child_process';
 import * as fs from 'fs';
 import path from 'path';
+import * as os from 'os';
 
 let id = 0;
 export default {
@@ -60,6 +61,24 @@ export default {
       if (dir && dir.length > 0) {
         if (fs.existsSync(path.join(dir[0], '.eide'))) {
           child_process.exec(`vscode ${dir[0]}`);
+          if (!fs.existsSync(`${os.homedir}/.mips-studio`)) {
+            fs.mkdirSync(`${os.homedir}/.mips-studio`);
+          }
+          if (!fs.existsSync(`${os.homedir}/.mips-studio/history`)) {
+            fs.appendFileSync(`${os.homedir}/.mips-studio/history`, `${dir[0]}\n`);
+          } else {
+            const f = fs.readFileSync(`${os.homedir}/.mips-studio/history`, 'utf8');
+            let f_inner = [];
+
+            for (let line of f.split('\n')) {
+              line = line.trim();
+              f_inner.push(line);
+            }
+
+            if (!f_inner.find(dir)) {
+              fs.appendFileSync(`${os.homedir}/.mips-studio/history`, `${dir[0]}\n`);
+            }
+          }
           app.quit();
         } else {
           this.$router.push({ name: 'importproject' });
