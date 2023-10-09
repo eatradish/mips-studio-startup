@@ -64,7 +64,7 @@ import * as child_process from 'child_process';
 const { dialog } = require('electron').remote;
 
 function read_json() {
-  const p = path.join(".", "mips-studio-startup-json.json");
+  const p = path.join(process.resourcesPath, "mips-studio-startup-json.json");
   const s = fs.readFileSync(p, { encoding: 'utf8', flag: 'r' });
   let json = JSON.parse(s);
   return json;
@@ -94,7 +94,7 @@ export default {
       const folder = new_folder_dialog();
       if (folder) {
         const extractTo = `${folder}/${projectName}`;
-        const p = path.join(".", "eide-templates", `${name}.ept`);
+        const p = path.join(process.resourcesPath, "eide-templates", `${name}.ept`);
         const seven = Seven.extractFull(p, extractTo)
         seven.on('error', (err) => console.error(err));
         seven.on('end', () => console.log("done!"));
