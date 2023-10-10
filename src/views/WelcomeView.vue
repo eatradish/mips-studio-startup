@@ -11,7 +11,7 @@
         <img class="button-icon" alt="Vue logo" src="@/assets/OpenFileFromProject_16x.svg">
         <a>打开项目</a>
       </button>
-      <button class="button" @click="doc()">
+      <button class="button" @click="openDoc()">
         <img class="button-icon" alt="Vue logo" src="@/assets/CloudSearch_16x.svg">
         <a>查询用户文档</a>
       </button>
@@ -20,7 +20,7 @@
       <a class="main-subtitle">最近项目</a>
       <ul v-if="history">
         <li v-for="[i, entry] in history.entries()" :key="i">
-          <a class="link" @click="opendir(entry)">{{ entry }}</a>
+          <a class="link" @click="openDir(entry)">{{ entry }}</a>
         </li>
       </ul>
     </div>
@@ -60,12 +60,12 @@ export default {
     }
   },
   methods: {
-    doc() {
+    openDoc() {
       shell.openExternal('https://www.cipunited.com')
         .then(() => console.log('opened!'))
-        .catch((reson) => console.error(reson));
+        .catch((reason) => console.error(reason));
     },
-    opendir(dir) {
+    openDir(dir) {
       if (!fs.existsSync(dir)) {
         console.error(`${dir} does not exist`);
         return;
@@ -191,7 +191,6 @@ li {
   font-size: 14px;
   line-height: 20px;
 }
-
 
 .button-icon {
   width: 28px;
