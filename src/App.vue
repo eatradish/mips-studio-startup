@@ -6,14 +6,15 @@
 
 <style>
 body {
-  background-color: #fff;
   display: flex;
+  margin: 0;
   line-height: 1.3;
+  background-color: #fff;
   font-family: "Noto Sans CJK SC", Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
   text-rendering: optimizeLegibility;
   /* max-width: 54rem; */
-  width: 100%;
+  /* width: 100%; */
 }
 
 #app {
