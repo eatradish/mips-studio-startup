@@ -39,17 +39,9 @@ import path from 'path';
 import * as os from 'os';
 
 function history() {
-  if (!fs.existsSync(`${os.homedir}/.mips-studio`)) {
-    fs.mkdirSync(`${os.homedir}/.mips-studio`);
-  } else {
-    if (!fs.existsSync(`${os.homedir}/.mips-studio/history`)) {
-      fs.writeFileSync(`${os.homedir}/.mips-studio/history`, '');
-    }
-  }
-
   const f = fs.readFileSync(`${os.homedir}/.mips-studio/history`, 'utf8');
   const res = f.split('\n')
-
+  
   return res;
 }
 
@@ -77,6 +69,26 @@ export default {
       if (dir && dir.length > 0) {
         if (fs.existsSync(path.join(dir[0], '.eide'))) {
           child_process.exec(`${path.join(process.resourcesPath, 'vscodium', 'bin', 'codium')} ${dir[0]}`);
+          if (!fs.existsSync(`${os.homedir}/.mips-studio`)) {
+            fs.mkdirSync(`${os.homedir}/.mips-studio`);
+          }
+          if (!fs.existsSync(`${os.homedir}/.mips-studio/history`)) {
+            fs.appendFileSync(`${os.homedir}/.mips-studio/history`, `${dir[0]}\n`);
+          } else {
+            const f = fs.readFileSync(`${os.homedir}/.mips-studio/history`, 'utf8');
+            let fInner = [];
+
+            for (let line of f.split('\n')) {
+              line = line.trim();
+              if (line !== '') {
+                fInner.push(line);
+              }
+            }
+
+            if (!fInner.find((s) => s == dir[0])) {
+              fs.appendFileSync(`${os.homedir}/.mips-studio/history`, `${dir[0]}\n`);
+            }
+          }
           app.quit();
         } else {
           this.$router.push({ name: 'importproject' });
@@ -91,6 +103,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
 .link {
   color: #705697;
   cursor: pointer;
