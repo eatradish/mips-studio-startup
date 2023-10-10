@@ -42,6 +42,7 @@
 import HeaderComponent from '@/components/HeaderComponent.vue';
 import SelectLayout from '@/components/SelectLayout.vue';
 import TextArea from '@/components/TextArea.vue';
+
 export default {
   components: { HeaderComponent, SelectLayout, TextArea },
   data() {
@@ -58,64 +59,64 @@ export default {
 </script>
 
 <style scoped>
-  .main {
-    display: flex;
-    flex-flow: row;
-    column-gap: 105px;
-  }
+.main {
+  display: flex;
+  flex-flow: row;
+  column-gap: 105px;
+}
 
-  .left {
-    display: flex;
-    flex-flow: column;
-    row-gap: 10px;
-  }
+.left {
+  display: flex;
+  flex-flow: column;
+  row-gap: 10px;
+}
 
-  .right {
-    display: flex;
-    flex-flow: column;
-    row-gap: 10px;
-  }
+.right {
+  display: flex;
+  flex-flow: column;
+  row-gap: 10px;
+}
 
-  .select-container {
-    display: flex;
-    flex-flow: column;
-  }
+.select-container {
+  display: flex;
+  flex-flow: column;
+}
 
-  .textarea-container {
-    display: flex;
-    flex-flow: column;
-  }
+.textarea-container {
+  display: flex;
+  flex-flow: column;
+}
 
-  .link {
-    color: #705697;
-  }
+.link {
+  color: #705697;
+}
 
-  .button-bar {
-    display: flex;
-    flex-flow: row;
-    column-gap: 12px;
-    align-items: end;
-  }
+.button-bar {
+  display: flex;
+  flex-flow: row;
+  column-gap: 12px;
+  align-items: flex-end;
+}
 
-  .bar-button-continue {
-    width: 96px; 
-    height: 36px;
-    background: #D1B6DB;
-    border: none;
-  }
+.bar-button-continue {
+  width: 96px;
+  height: 36px;
+  background: #D1B6DB;
+  border: none;
+}
 
-  .bar-button-cancel {
-    width: 96px; 
-    height: 36px;
-    background: #D6CFE2;
-    border: none;
-  }
+.bar-button-cancel {
+  width: 96px;
+  height: 36px;
+  background: #D6CFE2;
+  border: none;
+}
 
-  button:hover {
-    background: #E0C5EA;
-  }
+button:hover {
+  background: #E0C5EA;
+}
 
-  select:hover {
-    background: #E0C5EA;
-  }
+select:hover {
+  background: #E0C5EA;
+}
 </style>
