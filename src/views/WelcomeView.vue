@@ -4,15 +4,15 @@
     <div class="startup">
       <a class="main-subtitle">启动向导</a>
       <button class="button" @click="$router.push({ name: 'newproject' })">
-        <img class="button-icon" alt="Vue logo" src="@/assets/AddToCollection_16x.svg">
+        <img class="button-icon" alt="新建 MIPS Studio 项目" src="@/assets/AddToCollection_16x.svg">
         <a>新建项目</a>
       </button>
       <button class="button" @click="openProject()">
-        <img class="button-icon" alt="Vue logo" src="@/assets/OpenFileFromProject_16x.svg">
+        <img class="button-icon" alt="打开现有项目" src="@/assets/OpenFileFromProject_16x.svg">
         <a>打开项目</a>
       </button>
       <button class="button" @click="openDoc()">
-        <img class="button-icon" alt="Vue logo" src="@/assets/CloudSearch_16x.svg">
+        <img class="button-icon" alt="打开用户文档网站" src="@/assets/CloudSearch_16x.svg">
         <a>查询用户文档</a>
       </button>
     </div>

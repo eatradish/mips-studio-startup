@@ -1,5 +1,7 @@
 {
   "name": "mips-studio-startup",
+  "description": "MIPS Studio Startup",
+  "author": "CIP United",
   "version": "0.1.0",
   "private": true,
   "scripts": {
