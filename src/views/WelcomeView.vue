@@ -18,7 +18,7 @@
     </div>
     <div class="history">
       <a class="main-subtitle">最近项目</a>
-      <ul>
+      <ul v-if="history">
         <li v-for="[i, entry] in history.entries()" :key="i">
           <a class="link" @click="opendir(entry)">{{ entry }}</a>
         </li>
