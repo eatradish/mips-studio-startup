@@ -10,6 +10,3 @@ tar xvf "$DIR"/vscodium.tar.gz
 mkdir -pv "$DIR"/resources/vscodium/data
 cd "$DIR"
 npm run electron:build
-
-
-

@@ -98,7 +98,7 @@ export default {
         const seven = Seven.extractFull(p, extractTo)
         seven.on('error', (err) => console.error(err));
         seven.on('end', () => console.log("done!"));
-        child_process.exec(`vscode ${extractTo}/${workspaceName}`, (out) => console.log(out));
+        child_process.exec(`${path.join(process.resourcesPath, 'vscodium', 'bin', 'codium')} ${extractTo}/${workspaceName}`, (out) => console.log(out));
       }
     }
   }

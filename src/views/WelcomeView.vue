@@ -62,13 +62,13 @@ export default {
         console.error(`${dir} does not exist`);
         return;
       }
-      child_process.exec(`vscode ${dir}`)
+      child_process.exec(`${path.join(process.resourcesPath, 'vscodium', 'bin', 'codium')} ${dir}`)
     },
     openProject() {
       const dir = dialog.showOpenDialogSync({ properties: ['openDirectory'] });
       if (dir && dir.length > 0) {
         if (fs.existsSync(path.join(dir[0], '.eide'))) {
-          child_process.exec(`vscode ${dir[0]}`);
+          child_process.exec(`${path.join(process.resourcesPath, 'vscodium', 'bin', 'codium')} ${dir[0]}`);
           if (!fs.existsSync(`${os.homedir}/.mips-studio`)) {
             fs.mkdirSync(`${os.homedir}/.mips-studio`);
           }
