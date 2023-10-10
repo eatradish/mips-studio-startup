@@ -39,9 +39,17 @@ import path from 'path';
 import * as os from 'os';
 
 function history() {
+  if (!fs.existsSync(`${os.homedir}/.mips-studio`)) {
+    fs.mkdirSync(`${os.homedir}/.mips-studio`);
+  } else {
+    if (!fs.existsSync(`${os.homedir}/.mips-studio/history`)) {
+      fs.writeFileSync(`${os.homedir}/.mips-studio/history`, '');
+    }
+  }
+
   const f = fs.readFileSync(`${os.homedir}/.mips-studio/history`, 'utf8');
   const res = f.split('\n')
-  
+
   return res;
 }
 
@@ -103,7 +111,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 .link {
   color: #705697;
   cursor: pointer;
