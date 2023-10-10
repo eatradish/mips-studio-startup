@@ -58,45 +58,24 @@
 <script>
 import HeaderComponent from '@/components/HeaderComponent.vue';
 import ListButton from '@/components/ListButton.vue';
-import * as fs from 'fs';
-import * as path from 'path';
-import Seven from 'node-7z';
-import * as child_process from 'child_process';
-const { dialog } = require('electron').remote;
 
-function read_json() {
-  const p = path.join(process.resourcesPath, "mips-studio-startup-json.json");
-  const s = fs.readFileSync(p, { encoding: 'utf8', flag: 'r' });
-  let json = JSON.parse(s);
-  return json;
-}
-
-function new_folder_dialog() {
-  const dir = dialog.showOpenDialogSync({ properties: ['openDirectory'] });
-  return dir[0];
-}
+import { readStartupJson, newFolderDialog, extractTemplate } from '@/utils';
 
 export default {
   components: { HeaderComponent, ListButton },
   data() {
     return {
       selection: 0,
-      deviceList: [read_json()],
-      new_folder_dialog: new_folder_dialog,
+      deviceList: [readStartupJson()],
+      new_folder_dialog: newFolderDialog,
       projectName: '',
     }
   },
   methods: {
     extract_template(name, projectName, workspaceName) {
-      const folder = new_folder_dialog();
+      const folder = newFolderDialog();
       if (folder) {
-        const extractTo = `${folder}/${projectName}`;
-        const p = path.join(process.resourcesPath, "eide-templates", `${name}.ept`);
-        const seven = Seven.extractFull(p, extractTo)
-        seven.on('error', (err) => console.error(err));
-        seven.on('end', () => console.log("done!"));
-        const d = `${extractTo}/${workspaceName}`;
-        child_process(`${path.join(process.resourcesPath, 'vscodium', 'bin', 'codium')} ${d}`, (out) => console.log(out));
+        extractTemplate(name, folder, projectName, workspaceName);
       }
     }
   }

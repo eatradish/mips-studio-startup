@@ -31,76 +31,73 @@
 </template>
 
 <script>
+import path from 'node:path';
+import os from 'node:os';
+import fse from 'fs-extra';
+import { app, shell } from '@electron/remote';
+
 import HeaderComponent from '@/components/HeaderComponent.vue';
-const { dialog, shell, app } = require('electron').remote;
-import * as child_process from 'child_process';
-import * as fs from 'fs';
-import path from 'path';
-import * as os from 'os';
 
-function history() {
-  if (!fs.existsSync(`${os.homedir}/.mips-studio`)) {
-    fs.mkdirSync(`${os.homedir}/.mips-studio`);
-  } else {
-    if (!fs.existsSync(`${os.homedir}/.mips-studio/history`)) {
-      fs.writeFileSync(`${os.homedir}/.mips-studio/history`, '');
-    }
+import { newFolderDialog, openWithVSC } from '@/utils';
+
+const docUrl = 'https://www.cipunited.com';
+
+// TODO: should be path.join(app.getPath('userData'), 'history')
+const historyPath = path.join(os.homedir(), '.mips-studio', 'history');
+
+function getHistory() {
+  try {
+    // ensureFileSync create file and its parent dir
+    fse.ensureFileSync(historyPath);
+    return fse.readFileSync(historyPath, { encoding: 'utf8' })
+      .split('\n')
+      .map(line => line.trim())
+      .filter(line => line !== '');
+  } catch (e) {
+    throw new Error(`${historyPath} can't be created or is not a file`);
   }
-
-  const f = fs.readFileSync(`${os.homedir}/.mips-studio/history`, 'utf8');
-  const res = f.split('\n')
-
-  return res;
 }
 
 export default {
   data() {
     return {
-      history: history()
+      history: getHistory()
     }
   },
   methods: {
     openDoc() {
-      shell.openExternal('https://www.cipunited.com')
-        .then(() => console.log('opened!'))
+      shell.openExternal(docUrl)
+        // .then(() => console.log('opened!'))
         .catch((reason) => console.error(reason));
     },
     openDir(dir) {
-      if (!fs.existsSync(dir)) {
-        console.error(`${dir} does not exist`);
-        return;
-      }
-      child_process.exec(`${path.join(process.resourcesPath, 'vscodium', 'bin', 'codium')} ${dir}`)
+      openWithVSC(dir);
     },
     openProject() {
-      const dir = dialog.showOpenDialogSync({ properties: ['openDirectory'] });
-      if (dir && dir.length > 0) {
-        if (fs.existsSync(path.join(dir[0], '.eide'))) {
-          child_process.exec(`${path.join(process.resourcesPath, 'vscodium', 'bin', 'codium')} ${dir[0]}`);
-          if (!fs.existsSync(`${os.homedir}/.mips-studio`)) {
-            fs.mkdirSync(`${os.homedir}/.mips-studio`);
-          }
-          if (!fs.existsSync(`${os.homedir}/.mips-studio/history`)) {
-            fs.appendFileSync(`${os.homedir}/.mips-studio/history`, `${dir[0]}\n`);
-          } else {
-            const f = fs.readFileSync(`${os.homedir}/.mips-studio/history`, 'utf8');
-            let fInner = [];
 
-            for (let line of f.split('\n')) {
-              line = line.trim();
-              if (line !== '') {
-                fInner.push(line);
-              }
-            }
+      const dir = newFolderDialog();
+      if (dir === undefined) return;
 
-            if (!fInner.find((s) => s == dir[0])) {
-              fs.appendFileSync(`${os.homedir}/.mips-studio/history`, `${dir[0]}\n`);
-            }
-          }
-          app.quit();
-        } else {
-          this.$router.push({ name: 'importproject' });
+      const eidePath = path.join(dir, '.eide');
+      if (fse.existsSync(eidePath)) {
+
+        // .eide dir exists, open it, add to history, exit
+        openWithVSC(dir);
+
+        // Update history file
+        const historyArr = getHistory();
+        if (!historyArr.includes(dir)) {
+          historyArr.push(dir);
+          // outputFileSync = writeFileSync + create parent dir if it does not exist
+          fse.outputFileSync(historyPath, historyArr.join("\n"));
         }
+
+         // TODO: 在别的打开 VSC 之后的场景加上 app.quit()？
+         app.quit();
+
+      } else {
+        // .eide dir don't exist, goto importproject
+        this.$router.push({ name: 'importproject' });
       }
     }
   },
