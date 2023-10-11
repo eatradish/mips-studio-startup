@@ -15,5 +15,10 @@
       "dom.iterable",
       "scripthost"
     ]
-  }
+  },
+  "exclude": [
+    "dist_electron/win-unpacked",
+    "dist_electron/linux-unpacked",
+    "resources/vscodium"
+  ]
 }

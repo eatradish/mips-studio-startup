@@ -71,6 +71,7 @@ export default {
         .catch((reason) => console.error(reason));
     },
     openDir(dir) {
+      // TODO: 和 extractTemplate() 里一样，打开 .code-workspace 文件？
       openWithVSC(dir);
     },
     openProject() {
@@ -82,6 +83,7 @@ export default {
       if (fse.existsSync(eidePath)) {
 
         // .eide dir exists, open it, add to history, exit
+        // TODO: 和 extractTemplate() 里一样，打开 .code-workspace 文件？
         openWithVSC(dir);
 
         // Update history file
@@ -89,11 +91,11 @@ export default {
         if (!historyArr.includes(dir)) {
           historyArr.push(dir);
           // outputFileSync = writeFileSync + create parent dir if it does not exist
-          fse.outputFileSync(historyPath, historyArr.join("\n"));
+          fse.outputFileSync(historyPath, historyArr.join('\n'));
         }
 
-         // TODO: 在别的打开 VSC 之后的场景加上 app.quit()？
-         app.quit();
+        // TODO: 给别的打开 VSC 之后的场景也加上 app.quit()？
+        app.quit();
 
       } else {
         // .eide dir don't exist, goto importproject

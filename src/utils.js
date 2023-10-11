@@ -19,7 +19,7 @@ const paths = {
   resources: resourcesPath,
   startupJson:   path.join(resourcesPath, 'mips-studio-startup-json.json'),
   VSC:           path.join(resourcesPath, 'vscodium', 'bin', codium),
-  eideTemplates: path.join(resourcesPath, "eide-templates"),
+  eideTemplates: path.join(resourcesPath, 'eide-templates'),
 };
 
 // Freeze & check paths
@@ -30,12 +30,12 @@ for (const [key, value] of Object.entries(paths)) {
   }
 }
 
-/** @type any */
+/** @returns {any} */
 const readStartupJson = () => fse.readJsonSync(paths.startupJson, { encoding: 'utf8' });
 
 /** When getting only one dir from dialog.showOpenDialogSync(),
  * return dir | undefined, instead of [dir] | undefined.
- * @type string | undefined */
+ * @returns {string | undefined} */
 const newFolderDialog = () => {
   const dirs = dialog.showOpenDialogSync({ properties: ['openDirectory'] });
   return (
@@ -46,18 +46,21 @@ const newFolderDialog = () => {
 };
 
 /** open a dir / code-workspace in VSC
- * TODO: handle error path does not exist?
- * @type void */
-const openWithVSC = path => {
-  if (fse.existsSync(path)) {
-    spawn(paths.VSC, [path], { detached: true });
+ * @param {string} projectPath */
+const openWithVSC = projectPath => {
+  if (fse.existsSync(projectPath)) {
+    spawn(paths.VSC, [projectPath], { detached: true });
   } else {
-    console.error(`${path} does not exist`);
+    // TODO: handle this error?
+    console.error(`${projectPath} does not exist`);
   }
 };
 
 /** Extract & open EIDE ept template in VSC
- * @type void */
+ * @param {string} templateName
+ * @param {string} parentDir
+ * @param {string} projectName
+ * @param {string} workspaceName */
 const extractTemplate = (templateName, parentDir, projectName, workspaceName) => {
   const ept = path.join(paths.eideTemplates, `${templateName}.ept`);
   const projectDir = path.join(parentDir, projectName);
